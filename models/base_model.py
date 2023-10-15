@@ -1,7 +1,5 @@
 #!/usr/bin/python3
-"""
-class BaseModel that defines all common attributes/methods for other classes
-"""
+"""class BaseModel"""
 import uuid
 from datetime import datetime
 import models
@@ -16,7 +14,11 @@ class BaseModel:
 
     """
     def __init__(self, *args, **kwargs):
-        """Initializes Attributes"""
+        """Initializes Attributes
+        Args:
+            args(tuple): arguments
+            kwargs(dict): keyword arguments
+        """
         if kwargs:
             for key, val in kwargs.items():
                 if key == 'created_at' or key == 'updated_at':
