@@ -11,6 +11,7 @@ class TestBaseModel(unittest.TestCase):
     """tests base madel class"""
 
     def test_init(self):
+        """tests init method"""
         obj = BaseModel()
         self.assertTrue(hasattr(obj, 'id'))
         self.assertTrue(hasattr(obj, 'created_at'))
@@ -20,6 +21,7 @@ class TestBaseModel(unittest.TestCase):
         self.assertIsInstance(obj.updated_at, datetime)
 
     def test_str(self):
+        """tests str method"""
         obj = BaseModel()
         string = str(obj)
         self.assertIn('[BaseModel]', string)
@@ -28,11 +30,13 @@ class TestBaseModel(unittest.TestCase):
         self.assertIn("updated_at': ", string)
 
     def test_save(self):
+        """test for save method"""
         obj = BaseModel()
         obj.save()
         self.assertNotEqual(obj.created_at, obj.updated_at)
 
     def test_to_dict(self):
+        """test for dictionary method"""
         obj = BaseModel()
         class_dict = obj.to_dict()
         self.assertTrue('id' in class_dict)
