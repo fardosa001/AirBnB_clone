@@ -24,7 +24,7 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, line):
         """ Prints the string representation of an instance,
         based on the class name and id"""
-        
+
         args = line.split()
         if len(args) == 0:
             print("** class name missing **")
@@ -33,7 +33,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        if len (args) < 2:
+        if len(args) < 2:
             print("** instance id missing **")
             return
 
@@ -100,7 +100,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
 
-        if args[0]  not in HBNBCommand.classes:
+        if args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
 
