@@ -135,6 +135,7 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def emptyline(self):
+        """no command executed"""
         pass
 
 
