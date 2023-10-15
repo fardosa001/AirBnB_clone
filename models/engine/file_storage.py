@@ -6,7 +6,6 @@ import json
 import os
 
 
-
 class FileStorage:
     """FileStorage class
     private class attributes:
@@ -16,12 +15,12 @@ class FileStorage:
     """
     __file_path = 'file.json'
     __objects = {}
-   
+
     @classmethod
     def all(self):
         """returns the dictionary __objects"""
         return self.__objects
-    
+
     @classmethod
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
@@ -51,4 +50,3 @@ class FileStorage:
                 self.__objects[k] = obj
         except Exception:
             pass
-                
