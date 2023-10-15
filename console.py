@@ -7,7 +7,8 @@ from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
-    classes = {"BaseModel", "User"}
+    classes = {"BaseModel", "User", "City", "State",
+                "Amenity", "Place", "Review"}
 
     def do_create(self, line):
         """Creates a new instance of BaseModel"""
