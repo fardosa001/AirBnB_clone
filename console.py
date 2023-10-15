@@ -3,16 +3,21 @@
 import cmd
 import models
 from models.base_model import BaseModel
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
     classes = {"BaseModel", "User", "City", "State",
-                "Amenity", "Place", "Review"}
+               "Amenity", "Place", "Review"}
 
     def do_create(self, line):
         """Creates a new instance of BaseModel"""
-        args = line.split()
+        args = line.split()[0]
         if len(args) == 0:
             print("** class name missing **")
         elif args[0] not in HBNBCommand.classes:
@@ -26,7 +31,7 @@ class HBNBCommand(cmd.Cmd):
         """ Prints the string representation of an instance,
         based on the class name and id"""
 
-        args = line.split()
+        args = line.split()[0]
         if len(args) == 0:
             print("** class name missing **")
             return
@@ -51,7 +56,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing **")
             return
 
-        args = line.split()
+        args = line.split()[0]
         if len(args) < 2:
             print("** instance id missing **")
 
@@ -72,7 +77,7 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, line):
         """ Prints all string representation of all instances,
         based or not on the class name."""
-        args = line.split()
+        args = line.split()[0]
         objs = models.storage.all()
         obj_list = []
         if len(args) <= 1:
@@ -92,7 +97,7 @@ class HBNBCommand(cmd.Cmd):
         """Updates an instance based on the class name and id
         by adding or updating attribute"""
 
-        args = line.split()
+        args = line.split()[0]
         if len(args) == 0:
             print("** class name missing **")
             return
