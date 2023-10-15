@@ -77,7 +77,7 @@ class HBNBCommand(cmd.Cmd):
             else:
                 for key, obj in objs.items():
                     if key.startswith(args[0]):
-                        obj_list.append(obj.__str__())
+                        obj_list.append(str(obj))
                 print(obj_list)
         else:
             for obj in objs.values():
