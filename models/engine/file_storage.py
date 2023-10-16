@@ -3,7 +3,6 @@
     and deserializes JSON file to instances
 """
 import json
-import os
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -22,31 +21,26 @@ class FileStorage:
     """
     __file_path = 'file.json'
     __objects = {}
-    class_dict = {"BaseModel": BaseModel, "User": User, "Place": Place,
-                  "Amenity": Amenity, "City": City, "Review": Review,
-                  "State": State}
 
-    @classmethod
     def all(self):
         """returns the dictionary __objects"""
         return self.__objects
 
-    @classmethod
     def new(self, obj):
         """sets in __objects the obj with key <obj class name>.id"""
-        k = "{}.{}".format(obj.__class__.__name__, obj.id)
+        k = "{}.{}".format(type(obj).__name__, obj.id)
         self.__objects[k] = obj
 
-    @classmethod
     def save(self):
         """serializes __objects to the JSON file (path: __file_path)"""
         info = {}
         for k, obj in self.__objects.items():
             info[k] = obj.to_dict()
-        with open(self.__file_path, 'w', encoding='utf-8') as f:
-            json.dump(info, f)
 
-    @classmethod
+        json_string = json.dumps(info)
+        with open(self.__file_path, 'w', encoding='utf-8') as f:
+            f.write(json_string)
+
     def reload(self):
         """deserializes the JSON file to __objects (only if the JSON file
         (__file_path) exists; otherwise, do nothing.
@@ -54,9 +48,9 @@ class FileStorage:
         """
         try:
             with open(self.__file_path, 'r', encoding='utf-8') as f:
-                info = json.load(f)
-            for k, val in info.items():
-                obj = self.class_dict[val['__class__']](**val)
-                self.__objects[k] = obj
-        except Exception:
+                data = json.load(f)
+            for info in data.values():
+                obj = info["__class__"]
+                self.new(eval("{}({})".format(obj, "**info")))
+        except FileNotFoundError:
             pass

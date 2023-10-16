@@ -2,6 +2,7 @@
 """contains the entry point of the command interpreter"""
 import cmd
 import models
+from models.user import User
 from models.base_model import BaseModel
 from models.state import State
 from models.city import City
@@ -52,27 +53,31 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, line):
         """Deletes an instance based on the class name and id"""
-        if not line:
+        
+        args = line.split()
+        if len(args) == 0:
             print("** class name missing **")
             return
 
-        args = line.split()
-        if len(args) < 2:
+        elif len(args) == 1:
             print("** instance id missing **")
+            return
 
         cls_name = args[0]
         obj_id = args[1]
 
         if cls_name not in HBNBCommand.classes:
             print("** class doesn't exist **")
+            return
 
-        name = "{}.{}".format(cls_name, obj_id)
-        objects = models.storage.all()
-        if name in objects:
-            del objects[name]
-            models.storage.save()
         else:
-            print("** no instance found **")
+            name = "{}.{}".format(cls_name, obj_id)
+            objects = models.storage.all()
+            if name in objects:
+                del objects[name]
+                models.storage.save()
+            else:
+                print("** no instance found **")
 
     def do_all(self, line):
         """ Prints all string representation of all instances,
@@ -80,7 +85,7 @@ class HBNBCommand(cmd.Cmd):
         args = line.split()
         objs = models.storage.all()
         obj_list = []
-        if len(args) <= 1:
+        if len(args) == 1:
             if args[0] not in HBNBCommand.classes:
                 print("** class doesn't exist **")
             else:
@@ -97,17 +102,25 @@ class HBNBCommand(cmd.Cmd):
         """Updates an instance based on the class name and id
         by adding or updating attribute"""
 
-        args = line.split()
+        args = tuple(line.split())
         if len(args) == 0:
             print("** class name missing **")
             return
 
-        if len(args) < 2:
+        elif args[0] not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
+
+        elif len(args) == 1:
             print("** instance id missing **")
             return
 
-        if args[0] not in HBNBCommand.classes:
-            print("** class doesn't exist **")
+        elif len(args) < 3:
+            print("** attribute name missing **")
+            return
+
+        elif len(args) < 4:
+            print("** value missing **")
             return
 
         key = "{}.{}".format(args[0], args[1])
@@ -116,22 +129,16 @@ class HBNBCommand(cmd.Cmd):
             print("** no instance found **")
             return
 
-        if len(args) < 3:
-            print("** attribute name missing **")
-            return
+        attr_name = args[2]
+        attr_value = args[3]
+        instance = objs[key]
 
-        if len(args) < 4:
-            print("** value missing **")
-
-            attr_name = args[2]
-            attr_value = args[3]
-            instance = objs[key]
-
-            if hasattr(instance, attr_name):
-                setattr(instance, attr_name, attr_value)
-                instance.save()
-            else:
-                print("** attribute doesn't exist **")
+        try:
+            value = eval(attr_value)
+        except Exception:
+            value = attr_value
+        setattr(instance, attr_name, value)
+        models.storage.save()
 
     def do_quit(self, line):
         """exit the program"""
