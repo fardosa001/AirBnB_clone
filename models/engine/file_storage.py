@@ -25,6 +25,7 @@ class FileStorage:
     class_dict = {"BaseModel": BaseModel, "User": User, "Place": Place,
                   "Amenity": Amenity, "City": City, "Review": Review,
                   "State": State}
+
     @classmethod
     def all(self):
         """returns the dictionary __objects"""
