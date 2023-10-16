@@ -21,13 +21,14 @@ class BaseModel:
         """
         if kwargs:
             for key, val in kwargs.items():
-                if key == 'created_at' or key == 'updated_at':
-                    setattr(self, key, datetime.isoformat(val))
-                elif key != '__class__':
-                    setattr(self, key, val)
+                if key != '__class__':
+                    if key == 'created_at' or key == 'updated_at':
+                        setattr(self, key, datetime.from.isoformat(val))
+                    else:
+                        setattr(self, key, val)
         else:
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.now()
+            self.created_at = datetime.today()
             self.updated_at = self.created_at
             models.storage.new(self)
 
@@ -38,7 +39,7 @@ class BaseModel:
 
     def save(self):
         """updates the public instance attribute with the current datetime"""
-        self.updated_at = datetime.now()
+        self.updated_at = datetime.today()
         models.storage.save()
 
     def to_dict(self):
