@@ -5,6 +5,7 @@ from models.engine.file_storage import FileStorage
 from models.user import User
 import json
 
+
 class TestFileStorage(unittest.TestCase):
     """class tests"""
     def setUp(self):
@@ -36,7 +37,7 @@ class TestFileStorage(unittest.TestCase):
         self.storage.new(self.user)
         self.storage.save()
         self.assertTrue(os.path.exists(self.path))
-        
+
     def test_reload(self):
         """test for reload method"""
         self.storage.new(self.user)
