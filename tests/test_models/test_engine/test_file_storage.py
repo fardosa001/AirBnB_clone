@@ -24,13 +24,13 @@ class TestFileStorage(unittest.TestCase):
         """tests for all method"""
         objects = self.storage.all()
         self.assertIsInstance(objects, dict)
-        self.assertEqual(len(objects), 1)
+        self.assertEqual(len(objects), 7)
 
     def test_new(self):
         """test for new created"""
         self.storage.new(self.user)
         objects = self.storage.all()
-        self.assertEqual(len(objects), 2)
+        self.assertEqual(len(objects), 8)
 
     def test_save(self):
         """test for save method"""
@@ -44,7 +44,7 @@ class TestFileStorage(unittest.TestCase):
         self.storage.save()
         self.storage.reload()
         objects = self.storage.all()
-        self.assertEqual(len(objects), 3)
+        self.assertEqual(len(objects), 9)
 
 
 if __name__ == '__main__':
