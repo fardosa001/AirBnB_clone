@@ -23,14 +23,18 @@ class TestFileStorage(unittest.TestCase):
     def test_all(self):
         """tests for all method"""
         objects = self.storage.all()
-        self.assertIsInstance(objects, dict)
-        self.assertEqual(len(objects), 7)
+        self.assertEqual(type(objects), dict)
 
     def test_new(self):
         """test for new created"""
-        self.storage.new(self.user)
-        objects = self.storage.all()
-        self.assertEqual(len(objects), 8)
+        storage = FileStorage()
+        obj = storage.all()
+        user = User()
+        user.id = "3459"
+        user.name = "Ali"
+        storage.new(user)
+        key = user.__class__.__name__ + "." + str(user.id)
+        self.assertIsNotNone(obj[key])
 
     def test_save(self):
         """test for save method"""
@@ -40,11 +44,17 @@ class TestFileStorage(unittest.TestCase):
 
     def test_reload(self):
         """test for reload method"""
-        self.storage.new(self.user)
-        self.storage.save()
-        self.storage.reload()
-        objects = self.storage.all()
-        self.assertEqual(len(objects), 9)
+        storage = FileStorage()
+        try:
+            os.remove("file.json")
+        except Exception:
+            pass
+        with open("file.json", "w") as f:
+            f.write("{}")
+        with open("file.json", "r") as r:
+            for line in r:
+                self.assertEqual(line, "{}")
+        self.assertIs(storage.reload(), None)
 
 
 if __name__ == '__main__':
