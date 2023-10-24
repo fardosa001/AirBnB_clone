@@ -52,12 +52,13 @@ section.filters button:hover {
     border: 1px solid #DDDDDD;
     border-radius: 4px;
     background-color: #FAFAFA;
+    position: relative;
 }
 .popover h2 {
     font-size: 16px;
 }
 li {
-    line-height: 25px;
+    list-style-type: none;
     margin-top: 10px;
     margin-bottom: 10px;
 }
