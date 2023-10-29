@@ -19,11 +19,12 @@ section.filters button {
  height: 48px;
  width: 20%;
  float: right;
+ font-size: 18px;
  margin: 11px 30px;
  background-color: #FF5A5F;   
 }
 section.filters button:hover {
-    opacity: 90%;
+    opacity: .9;
 }
 .locations,
 .amenities {
@@ -37,14 +38,21 @@ section.filters button:hover {
 .locations h3,
 .amenities h3 {
     font-weight: 600;
-    margin: 10px 0px 0px 0px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    font-size: 16px;
+    text-align: left;
+    margin-left: 30px;
 }
 
 .locations h4,
 .amenities h4 {
     font-weight: 400;
     font-size: 14px;
-    margin: 0;
+    margin-top:  0px;
+    margin-bottom: 0px;
+    text-align: left;
+    margin-left: 30px;
 }
 
 .popover {
